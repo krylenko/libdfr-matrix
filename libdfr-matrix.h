@@ -21,13 +21,14 @@ class Matrix
 	public:
 	
 		// initialization
-		Matrix(const int& rows,				      // normal constructor
-				const int& cols=1);             // defaults to column vector
-		Matrix(const double& start,			    // range fill constructor
-				const double& end,
-				const double& interval);		
-		Matrix(const Matrix& in);				    // deep copy constructor
-		Matrix& operator=(const Matrix& a);	// overloaded assignment operator
+        Matrix();                               // default constructor, makes 1x1 matrix
+        Matrix(const int& rows,				    // normal constructor
+               const int& cols=1);              // defaults to column vector
+        Matrix(const double& start,			    // range fill constructor
+               const double& end,
+               const double& interval);
+        Matrix(const Matrix& in);				// deep copy constructor
+        Matrix& operator=(const Matrix& a);     // overloaded assignment operator
 		~Matrix(){delete [] element_;};			// destructor
 		
 		// dimension and matrix entry getters
@@ -40,6 +41,7 @@ class Matrix
 		void I();								// create identity matrix
 												// (exits if matrix is not square)
 		void fill(double scalar);				// fill matrix with scalar
+        void fillDiag(const double scalar);     // set all diagonal elements to scalar
 		void random(double max=1);				// fill matrix with random numbers
 												// [0-max]
 		void fillMan();							// enter matrix entries manually
@@ -64,7 +66,7 @@ class Matrix
 		Matrix operator*(const Matrix& b);		// multiply two matrices (dot product)
 		Matrix operator*(const double& b);		// multiply matrix by scalar
 		Matrix operator/(const double& b);		// divide matrix by scalar
-		Matrix emult(const Matrix& b);        // element-wise multiplication of two col vecs
+        Matrix emult(const Matrix& b);          // element-wise multiplication of two col vecs
     
 		// addition and subtraction
 		Matrix operator+(const Matrix& b);		// add a matrix
@@ -73,37 +75,35 @@ class Matrix
 		Matrix operator-(const double& b);		// subtract a scalar
 
 		// statistics
-		double sum();							                      // for whole matrix
+        double sum();                                   // for whole matrix
 		double mean();
 		double stdDev();
-    double sum(const int& axis, const int& idx);    // along a row or column
-    double mean(const int& axis, const int& idx);
-    double mag();                                   // magnitude of a vector
-    double stdDev(const int& axis, const int& idx);
+        double sum(const int& axis, const int& idx);    // along a row or column
+        double mean(const int& axis, const int& idx);
+        double mag();                                   // magnitude of a vector
+        double stdDev(const int& axis, const int& idx);
 		
 		// other functions
-		double det();							// calculates determinant (only for 2x2!)
-		Matrix norm();            // normalize all matrix entries
-		Matrix norm(const int& axis=COLS);  // normalize columns or rows
-    Matrix ln();              // take natural log of each element    
-		Matrix exp(const int& iterations=10);	// matrix exponential
-    Matrix pow(const int& power);  // naive matrix power function
+        double det();                                   // calculate determinant (only for 2x2!)
+        Matrix norm();                                  // normalize all matrix entries
+        Matrix norm(const int& axis=COLS);              // normalize columns or rows
+        Matrix ln();                                    // elementwise natural log
+        Matrix exp(const int& iterations=10);           // matrix exponential
+        Matrix pow(const int& power);                   // naive matrix power function
     
-    Matrix max();                 // returns column vector with max entry in each column
-    double maxS();                // returns max value of entire matrix
-    Matrix argmax();              // return index of max point(s)
+        Matrix max();                 // returns column vector with max entry in each column
+        double maxS();                // returns max value of entire matrix
+        Matrix argmax();              // return index of max point(s)
 		Matrix dupe(const int& num);  // duplicate a row or column vector as many times as indicated 
     
 		// display/utility
 		void fromFile(const char filename[]);		// load matrix from file
-		void printFile(const char filename[],
+        void printFile(const char filename[],       // print to file
 					   const int& blanks=NOBLANKS,
 					   const int& precision=7) const;
-													// print to file
-    void print(const int& blanks=NOBLANKS,
+        void print(const int& blanks=NOBLANKS,
 				   const int& precision=7) const;	// print to screen
 	
-	//private:
 	protected:
 		// data storage for the class
 		double** element_;

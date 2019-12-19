@@ -17,6 +17,22 @@
 /*																		*/	
 /*************************************************************************/
 
+// default constructor
+Matrix::Matrix()
+    : rows_(1), cols_(1)		// set dimensions
+{
+
+  // allocate memory
+  int k=0;
+  element_ = new double* [rows_];
+  for (k = 0; k < rows_; k++)
+      element_[k] = new double [cols_];
+
+  // initialize matrix to zero
+  zeros();
+
+}
+
 // normal constructor
 Matrix::Matrix(const int& rows, const int& cols)
 	: rows_(rows), cols_(cols)		// set dimensions
@@ -169,6 +185,24 @@ void Matrix::fill(double scalar)
   {
       for(j=0;j<cols_;j++)
 		element_[i][j] = scalar;
+  }
+
+}
+
+// populate diagonal of square matrix with specified value
+void Matrix::fillDiag(double scalar)
+{
+
+  int i,j;
+
+  // populate diagonal of matrix
+  for (i=0; i<rows_; i++)
+  {
+      for(j=0;j<cols_;j++) {
+          if (i == j) {
+            element_[i][j] = scalar;
+          }
+      }
   }
 
 }
